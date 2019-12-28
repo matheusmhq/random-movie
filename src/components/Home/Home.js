@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { throws } from "assert";
 
 import "./styles.css";
 
-let src = "";
+import { Server } from "../../server/ServerVariables";
 
+let src = "";
+let genresOptions = [];
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -16,20 +19,48 @@ export default class Home extends Component {
       show: "",
       showTrailer: ""
     };
+
+    this.getGender();
+  }
+
+  componentWillMount() {
+    //this.getGender();
+  }
+
+  getGender() {
+    fetch(Server.url + "genre/movie/list" + Server.key + Server.pt, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        genresOptions = responseJson.genres;
+        this.forceUpdate();
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   randomMovie() {
     this.setState({ show: "" });
     if (this.state.genre !== "") {
-      var page = Math.floor(Math.random() * (19 - 1)) + 1;
+      var page = Math.floor(Math.random() * (500 - 1)) + 1;
       var index = Math.floor(Math.random() * (20 - 0)) + 1;
 
       fetch(
-        "https://api.themoviedb.org/3/search/movie?query=" +
-          this.state.genre +
-          "&api_key=8f6303cc29888b9f9aac60437527e1f3&page=" +
+        Server.url +
+          "discover/movie" +
+          Server.key +
+          "&page=" +
           page +
-          "&language=pt-br",
+          Server.pt +
+          "&with_genres" +
+          this.state.genres +
+          "&include_adult=false",
         {
           method: "GET",
           headers: {
@@ -40,7 +71,7 @@ export default class Home extends Component {
       )
         .then(response => response.json())
         .then(responseJson => {
-          //console.log(responseJson);
+          console.log(responseJson);
 
           for (var i = 0; i < 20; i++) {
             if (index == i) {
@@ -68,7 +99,8 @@ export default class Home extends Component {
     fetch(
       "https://api.themoviedb.org/3/movie/" +
         this.state.randomMovie.id +
-        "/videos?api_key=8f6303cc29888b9f9aac60437527e1f3",
+        "/videos?api_key=8f6303cc29888b9f9aac60437527e1f3" +
+        Server.pt,
       {
         method: "GET",
         headers: {
@@ -81,7 +113,6 @@ export default class Home extends Component {
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.results[0] != null) {
-          console.log("FAVORITO AQUI " + responseJson.results[0].key);
           src = "https://www.youtube.com/embed/" + responseJson.results[0].key;
           this.setState({ trailer: src, showTrailer: "true" });
         }
@@ -96,14 +127,8 @@ export default class Home extends Component {
   };
 
   formatDate(date) {
-    let today = date;
-    // let teste =
-    //   today.getDate() +
-    //   "-" +
-    //   parseInt(today.getMonth() + 1) +
-    //   "-" +
-    //   today.getFullYear();
-    console.log(today);
+    var newDate = moment(date);
+    return newDate.format("DD/MM/YYYY");
   }
 
   getImage(poster_path) {
@@ -120,15 +145,19 @@ export default class Home extends Component {
         <div className="container">
           <h1 className="mb-5">Bem vindo ao Random Movie</h1>
           <div className="row">
-            <div className="col-md-9">
+            <div className="col-md-9 form-group">
+              <label>Gênero</label>
               <select onChange={this._handleChange} className="form-control">
                 <option value=""></option>
-                <option value="action">Acão</option>
-                <option value="terror">Terror</option>
-                <option value="aventure">Aventura</option>
+                {genresOptions.map((item, index) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="col-md-3">
+              <label>&nbsp;</label>
               <button
                 className="btn btn-primary btn-block"
                 onClick={() => this.randomMovie()}
@@ -157,12 +186,12 @@ export default class Home extends Component {
               <div className="col-md-7">
                 <p className="title">Titulo: {this.state.randomMovie.title}</p>
                 <p className="title">
-                  Lançamento: {this.state.randomMovie.release_date}
-                  {/* {this.formatDate(this.state.randomMovie.release_date)} */}
+                  Lançamento:{" "}
+                  {this.formatDate(this.state.randomMovie.release_date)}
                 </p>
 
                 <p className="language">
-                  Linguagem Original: {this.state.randomMovie.original_language}
+                  Linguagem Original:{this.state.randomMovie.original_language}
                 </p>
 
                 <p className="vote">
@@ -180,6 +209,7 @@ export default class Home extends Component {
               style={{ display: this.state.showTrailer ? "block" : "none" }}
             >
               <iframe
+                title="trailer"
                 width="100%"
                 height="500px"
                 src={this.state.trailer}
@@ -189,6 +219,10 @@ export default class Home extends Component {
               ></iframe>
             </div>
           </div>
+          {/* 
+          <div class="similar mt-5">
+            <h3>Filmes Similares</h3>
+          </div> */}
         </div>
       </section>
     );
