@@ -9,17 +9,17 @@ export default class Trailer extends Component {
     // console.log("DENTRO DE SIMILAR");
     // console.log(this.props.similar);
     return (
-      <section className="similar mt-5">
+      <section
+        className="similar mt-5"
+        style={{ display: this.props.showSimilar ? "block" : "none" }}
+      >
         <h4>Filmes Parecidos:</h4>
-        <div class="row">
+        <div className="row">
           {this.props.similar.map((item, index) => (
             <div
-              //   onClick={teste.bind(
-              //     this,
-              //     item.id,
-              //   )}
+              onClick={() => this.props.getSimilarId(item.id)}
               key={item.id}
-              className="col-md-3"
+              className="col-md-3 similar-item"
             >
               <img
                 className="img-fluid"

@@ -14,3 +14,12 @@
 label {
   color: white;
 }
+
+.similar-item {
+  cursor: pointer;
+  color: white;
+}
+
+.black {
+  background: rgba(0, 0, 0, 0.9);
+}
