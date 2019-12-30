@@ -7,6 +7,13 @@
   background: black;
 }
 
+.container-movie {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .container-movie p {
   color: black;
 }
@@ -361,4 +368,25 @@ label {
     transform: scale(1);
     opacity: 0;
   }
+}
+
+.trailer {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  top: 0px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trailer-container {
+  max-width: 1140px;
+}
+
+.btn-trailer {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }

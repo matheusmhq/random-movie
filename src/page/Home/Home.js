@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, Redirect } from "react-router-dom";
 
 import {
   FormatDate,
@@ -33,7 +34,8 @@ export default class Home extends Component {
       yearLTE: DateNow(),
       yearGTE: "",
       similar: [],
-      loading: ""
+      loading: false,
+      redirect: false
     };
 
     this.getGender();
@@ -55,129 +57,6 @@ export default class Home extends Component {
       .catch(error => {
         console.error(error);
       });
-  }
-
-  getPage() {
-    setTimeout(() => {
-      this.setState({ loading: "" });
-    }, 5000);
-    var gte2 = "";
-    var lte2 = "";
-    this.setState({ show: "", showTrailer: "", showSimilar: "" });
-    if (this.state.genre !== "") {
-      this.setState({ loading: "true" });
-      var index = Math.floor(Math.random() * (19 - 0)) + 1;
-
-      if (this.state.yearGTE != "") {
-        gte2 = this.state.yearGTE + "-01-01";
-      } else {
-        gte2 = "";
-      }
-      if (this.state.yearLTE != DateNow()) {
-        lte2 = this.state.yearLTE + "-12-31";
-      } else {
-        lte2 = DateNow();
-      }
-      fetch(
-        Server.url +
-          "discover/movie" +
-          Server.key +
-          "&page=" +
-          1 +
-          Server.pt +
-          "&with_genres=" +
-          this.state.genre +
-          "&include_adult=false&primary_release_date.gte=" +
-          gte2 +
-          "&primary_release_date.lte=" +
-          lte2,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      )
-        .then(response => response.json())
-        .then(responseJson => {
-          console.log(responseJson);
-          if (responseJson.results.length > 0) {
-            //console.log(responseJson.total_pages);
-
-            this.randomMovie(responseJson.total_pages);
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    } else {
-      alert("Selecione um gênero!");
-    }
-  }
-
-  randomMovie(total_pages) {
-    var gte = "";
-    var lte = "";
-    this.setState({ show: "" });
-    if (this.state.genre !== "") {
-      var page = Math.floor(Math.random() * (total_pages - 1)) + 1;
-      var index = Math.floor(Math.random() * (19 - 0)) + 1;
-
-      if (this.state.yearGTE != "") {
-        gte = this.state.yearGTE + "-01-01";
-      } else {
-        gte = "";
-      }
-      if (this.state.yearLTE != DateNow()) {
-        lte = this.state.yearLTE + "-12-31";
-      } else {
-        lte = DateNow();
-      }
-      fetch(
-        Server.url +
-          "discover/movie" +
-          Server.key +
-          "&page=" +
-          page +
-          Server.pt +
-          "&with_genres=" +
-          this.state.genre +
-          "&include_adult=false&primary_release_date.gte=" +
-          gte +
-          "&primary_release_date.lte=" +
-          lte,
-        {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        }
-      )
-        .then(response => response.json())
-        .then(responseJson => {
-          console.log(responseJson);
-          if (responseJson.results.length > 0) {
-            for (var i = 0; i < 20; i++) {
-              if (index == i) {
-                this.setState({
-                  randomMovie: responseJson.results[i],
-                  show: "true"
-                });
-
-                console.log(responseJson.results[i]);
-              }
-            }
-
-            this.getTrailer(this.state.randomMovie.id);
-            this.getSimilar(this.state.randomMovie.id);
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
   }
 
   getTrailer(id) {
@@ -273,16 +152,159 @@ export default class Home extends Component {
     height = this.divElement.clientHeight;
   }
 
+  getPage() {
+    var gte2 = "";
+    var lte2 = "";
+    if (this.state.genre !== "") {
+      this.setState({ loading: "true" });
+      var index = Math.floor(Math.random() * (19 - 0)) + 1;
+
+      if (this.state.yearGTE != "") {
+        gte2 = this.state.yearGTE + "-01-01";
+      } else {
+        gte2 = "";
+      }
+      if (this.state.yearLTE != DateNow()) {
+        lte2 = this.state.yearLTE + "-12-31";
+      } else {
+        lte2 = DateNow();
+      }
+      fetch(
+        Server.url +
+          "discover/movie" +
+          Server.key +
+          "&page=" +
+          1 +
+          Server.pt +
+          "&with_genres=" +
+          this.state.genre +
+          "&include_adult=false&primary_release_date.gte=" +
+          gte2 +
+          "&primary_release_date.lte=" +
+          lte2,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(responseJson => {
+          console.log(responseJson);
+          if (responseJson.results.length > 0) {
+            //console.log(responseJson.total_pages);
+
+            this.randomMovie(responseJson.total_pages);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    } else {
+      alert("Selecione um gênero!");
+    }
+  }
+
+  randomMovie(total_pages) {
+    var gte = "";
+    var lte = "";
+    if (this.state.genre !== "") {
+      var page = Math.floor(Math.random() * (total_pages - 1)) + 1;
+      var index = Math.floor(Math.random() * (19 - 0)) + 1;
+
+      if (this.state.yearGTE != "") {
+        gte = this.state.yearGTE + "-01-01";
+      } else {
+        gte = "";
+      }
+      if (this.state.yearLTE != DateNow()) {
+        lte = this.state.yearLTE + "-12-31";
+      } else {
+        lte = DateNow();
+      }
+      fetch(
+        Server.url +
+          "discover/movie" +
+          Server.key +
+          "&page=" +
+          page +
+          Server.pt +
+          "&with_genres=" +
+          this.state.genre +
+          "&include_adult=false&primary_release_date.gte=" +
+          gte +
+          "&primary_release_date.lte=" +
+          lte,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(responseJson => {
+          console.log(responseJson);
+          if (responseJson.results.length > 0) {
+            for (var i = 0; i < 20; i++) {
+              if (index == i) {
+                this.setState({
+                  randomMovie: responseJson.results[i],
+                  show: "true"
+                });
+
+                console.log(responseJson.results[i]);
+              }
+            }
+
+            this.getTrailer(this.state.randomMovie.id);
+            this.getSimilar(this.state.randomMovie.id);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  }
+
+  Verification() {
+    if (this.state.genre == "") {
+      alert("Selecione um Gênero!");
+    } else {
+      this.setState({ loading: true });
+      this.getPage();
+      setTimeout(() => {
+        this.setState({ redirect: true });
+      }, 5000);
+    }
+  }
+
   render() {
     window.scrollTo(0, height);
+    if (this.state.redirect) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/chosen",
+            state: {
+              genre: this.state.genre,
+              chosen: this.state.randomMovie
+            }
+          }}
+        />
+      );
+    }
     if (this.state.loading) {
-      return <Loading showLoading={this.state.loading} />;
+      return <Loading />;
     } else {
       return (
         <section className="home">
-          <div className="black">
+          <div className="black d-flex align-items-center justify-content-center">
             <div
-              className="search py-5"
+              className="search container"
               ref={divElement => {
                 this.divElement = divElement;
               }}
@@ -343,75 +365,12 @@ export default class Home extends Component {
                     <label>&nbsp;</label>
                     <button
                       className="btn btn-primary btn-block btn-search"
-                      onClick={() => this.getPage()}
+                      onClick={() => this.Verification()}
                     >
                       Procurar
                     </button>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div
-              className="container-movie py-3"
-              style={{
-                display: this.state.show ? "block" : "none",
-                backgroundImage: `url(${GetImage(
-                  this.state.randomMovie.backdrop_path,
-                  "original"
-                )})`,
-                flex: 1,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover"
-              }}
-            >
-              <div className="container container-white card">
-                <div className="mb-5 pt-4 d-flex justify-content-center">
-                  <h2 className="filme-escolhido-title">
-                    E o filme escolhido foi:
-                    <span> {this.state.randomMovie.title} </span>
-                  </h2>
-                </div>
-                <div className="row pb-4">
-                  <div className="col-md-5 position-relative">
-                    <img
-                      className="img-fluid img-card"
-                      src={GetImage(this.state.randomMovie.poster_path, "w780")}
-                      alt={this.state.randomMovie.title}
-                      title={this.state.randomMovie.title}
-                    />
-                    <p className="vote">
-                      <i className="far fa-star mr-2"></i>
-                      {this.state.randomMovie.vote_average}
-                    </p>
-                  </div>
-
-                  <div className="col-md-7 info-movie mt-4 mt-md-0">
-                    <p className="title">
-                      <span>Lançamento:</span>{" "}
-                      {FormatDate(this.state.randomMovie.release_date)}
-                    </p>
-
-                    <p className="language">
-                      <span>Linguagem Original:</span>{" "}
-                      {this.state.randomMovie.original_language}
-                    </p>
-
-                    <p className="overview">
-                      <span>Sinopse:</span> {this.state.randomMovie.overview}
-                    </p>
-                  </div>
-                </div>
-
-                <Trailer
-                  url={this.state.trailer}
-                  showTrailer={this.state.showTrailer}
-                />
-
-                <Similar
-                  showSimilar={this.state.showSimilar}
-                  similar={this.state.similar}
-                  getSimilarId={this.getSimilarId.bind(this)}
-                />
               </div>
             </div>
           </div>
