@@ -18,7 +18,7 @@ import Loading from "../../components/Loading/Loading";
 
 let src = "";
 let genresOptions = [];
-
+var height = 0;
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -58,6 +58,9 @@ export default class Home extends Component {
   }
 
   getPage() {
+    setTimeout(() => {
+      this.setState({ loading: "" });
+    }, 5000);
     var gte2 = "";
     var lte2 = "";
     this.setState({ show: "", showTrailer: "", showSimilar: "" });
@@ -219,9 +222,6 @@ export default class Home extends Component {
 
   getSimilar(id) {
     this.setState({ showSimilar: "" });
-    setTimeout(() => {
-      this.setState({ loading: "" });
-    }, 5000);
     fetch(
       Server.url +
         "movie/" +
@@ -269,15 +269,24 @@ export default class Home extends Component {
     this.getSimilar(id);
   }
 
+  componentDidMount() {
+    height = this.divElement.clientHeight;
+  }
+
   render() {
-    console.log("DATE NOW " + DateNow());
+    window.scrollTo(0, height);
     if (this.state.loading) {
       return <Loading showLoading={this.state.loading} />;
     } else {
       return (
         <section className="home">
           <div className="black">
-            <div className="search py-5">
+            <div
+              className="search py-5"
+              ref={divElement => {
+                this.divElement = divElement;
+              }}
+            >
               <div className="mb-5">
                 <h1 className="text-white">Bem-vindo ao Random Movie</h1>
               </div>
@@ -355,10 +364,10 @@ export default class Home extends Component {
                 backgroundSize: "cover"
               }}
             >
-              <div className="container bg-white container-white card">
+              <div className="container container-white card">
                 <div className="mb-5 pt-4 d-flex justify-content-center">
                   <h2 className="filme-escolhido-title">
-                    E o filme escolhido foi...
+                    E o filme escolhido foi:
                     <span> {this.state.randomMovie.title} </span>
                   </h2>
                 </div>
@@ -371,11 +380,12 @@ export default class Home extends Component {
                       title={this.state.randomMovie.title}
                     />
                     <p className="vote">
+                      <i className="far fa-star mr-2"></i>
                       {this.state.randomMovie.vote_average}
                     </p>
                   </div>
 
-                  <div className="col-md-7 info-movie">
+                  <div className="col-md-7 info-movie mt-4 mt-md-0">
                     <p className="title">
                       <span>Lançamento:</span>{" "}
                       {FormatDate(this.state.randomMovie.release_date)}

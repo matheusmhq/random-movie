@@ -13,10 +13,10 @@ export default class Trailer extends Component {
         className="similar"
         style={{ display: this.props.showSimilar ? "block" : "none" }}
       >
-        <h4 className="mb-2">Filmes Parecidos:</h4>
+        <h4 className="mb-4 mt-5">Filmes Parecidos:</h4>
         <div className="row">
           {this.props.similar.map((item, index) => (
-            <div key={item.id} className="col-md-3 similar-item mb-4">
+            <div key={item.id} className="col-6 col-md-3 similar-item mb-4">
               <div
                 className="similar-img"
                 onClick={() => this.props.getSimilarId(item.id)}
@@ -28,7 +28,10 @@ export default class Trailer extends Component {
                     title={item.title}
                     src={GetImage(item.poster_path, "w300")}
                   />
-                  <p className="vote-similar">{item.vote_average}</p>
+                  <p className="vote-similar">
+                    <i className="far fa-star mr-2"></i>
+                    {item.vote_average}
+                  </p>
                 </div>
               </div>
               <p

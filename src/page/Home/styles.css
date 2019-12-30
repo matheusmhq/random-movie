@@ -28,6 +28,10 @@ label {
   background: black;
 }
 
+.search h1 {
+  font-family: "Lobster", cursive;
+}
+
 .similar .title {
   text-align: center;
   font-weight: bold;
@@ -98,6 +102,8 @@ label {
 
 .filme-escolhido-title {
   color: #777;
+  font-family: "Anton", sans-serif;
+  font-weight: bold;
 }
 
 .filme-escolhido-title span {
@@ -148,7 +154,7 @@ label {
   right: 15px;
   background: orange;
   color: white !important;
-  width: 43px;
+  width: 64px;
   height: 43px;
   font-weight: bold;
   border-top-left-radius: 10px;
@@ -163,7 +169,7 @@ label {
   bottom: -16px;
   background: orange;
   color: white !important;
-  width: 43px;
+  width: 64px;
   height: 43px;
   font-weight: bold;
   border-top-left-radius: 10px;
@@ -181,8 +187,13 @@ label {
   transition: all 0.3s;
   -moz-transition: all 0.3s;
   -webkit-transition: all 0.3s;
-  height: 382px;
-  width: 255px;
+}
+
+@media screen and (min-width: 992px) {
+  .similar-img img {
+    height: 382px;
+    width: 255px;
+  }
 }
 
 .similar-img img:hover {
@@ -201,6 +212,10 @@ label {
 .img-card,
 .container-white {
   box-shadow: 1px 3px 20px 1px #474747;
+}
+
+.container-white {
+  background: #ffffffeb;
 }
 
 .btn-search {

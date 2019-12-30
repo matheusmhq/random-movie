@@ -7,13 +7,13 @@ export default class Loading extends Component {
         className="loading"
         style={{ display: this.props.showLoading ? "flex" : "none" }}
       >
-        <div class="container position-relative">
+        <div className="container position-relative">
           <h1>
             Aguarde enquanto procuramos um filme especialmente para você !
           </h1>
-          <div class="container-loading">
-            <div class="circle"></div>
-            <div class="circle"></div>
+          <div className="container-loading">
+            <div className="circle"></div>
+            <div className="circle"></div>
             <div class="circle"></div>
           </div>
         </div>
