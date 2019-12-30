@@ -7,7 +7,7 @@ export default class Trailer extends Component {
     return (
       <section className="trailer">
         <div
-          className="trailer col-12 mt-4"
+          className="trailer col-12 my-4"
           style={{ display: this.props.showTrailer ? "block" : "none" }}
         >
           <iframe

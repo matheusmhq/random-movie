@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import {
   FormatDate,
   SelectYear,
-  GetImage
+  GetImage,
+  DateNow
 } from "../../functions/FunctionsDefault";
 
 import "./styles.css";
@@ -13,9 +14,11 @@ import { Server } from "../../server/ServerVariables";
 //Import Components
 import Trailer from "../../components/Trailer/Trailer";
 import Similar from "../../components/Similar/Similar";
+import Loading from "../../components/Loading/Loading";
 
 let src = "";
 let genresOptions = [];
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -27,9 +30,10 @@ export default class Home extends Component {
       show: "",
       showTrailer: "",
       showSimilar: "",
-      yearLTE: "",
+      yearLTE: DateNow(),
       yearGTE: "",
-      similar: []
+      similar: [],
+      loading: ""
     };
 
     this.getGender();
@@ -58,6 +62,7 @@ export default class Home extends Component {
     var lte2 = "";
     this.setState({ show: "", showTrailer: "", showSimilar: "" });
     if (this.state.genre !== "") {
+      this.setState({ loading: "true" });
       var index = Math.floor(Math.random() * (19 - 0)) + 1;
 
       if (this.state.yearGTE != "") {
@@ -65,10 +70,10 @@ export default class Home extends Component {
       } else {
         gte2 = "";
       }
-      if (this.state.yearLTE != "") {
+      if (this.state.yearLTE != DateNow()) {
         lte2 = this.state.yearLTE + "-12-31";
       } else {
-        lte2 = "";
+        lte2 = DateNow();
       }
       fetch(
         Server.url +
@@ -121,10 +126,10 @@ export default class Home extends Component {
       } else {
         gte = "";
       }
-      if (this.state.yearLTE != "") {
+      if (this.state.yearLTE != DateNow()) {
         lte = this.state.yearLTE + "-12-31";
       } else {
-        lte = "";
+        lte = DateNow();
       }
       fetch(
         Server.url +
@@ -157,6 +162,7 @@ export default class Home extends Component {
                   randomMovie: responseJson.results[i],
                   show: "true"
                 });
+
                 console.log(responseJson.results[i]);
               }
             }
@@ -213,6 +219,9 @@ export default class Home extends Component {
 
   getSimilar(id) {
     this.setState({ showSimilar: "" });
+    setTimeout(() => {
+      this.setState({ loading: "" });
+    }, 5000);
     fetch(
       Server.url +
         "movie/" +
@@ -261,128 +270,143 @@ export default class Home extends Component {
   }
 
   render() {
-    return (
-      <section
-        style={{
-          backgroundImage: `url(${GetImage(
-            this.state.randomMovie.poster_path
-          )})`,
-          flex: 1,
-          backgroundRepeat: "no-repeat"
-        }}
-        teste={"TEste"}
-        className="home"
-      >
-        <div className="black py-5">
-          <div className="container">
-            <h1 className="mb-5">Bem vindo ao Random Movie</h1>
-            <div className="row">
-              <div className="col-md-6 form-group">
-                <label>Gênero</label>
-                <select
-                  onChange={this._genreChange}
-                  className="form-control"
-                  required
-                >
-                  <option value=""></option>
-                  {genresOptions.map((item, index) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
+    console.log("DATE NOW " + DateNow());
+    if (this.state.loading) {
+      return <Loading showLoading={this.state.loading} />;
+    } else {
+      return (
+        <section className="home">
+          <div className="black">
+            <div className="search py-5">
+              <div className="mb-5">
+                <h1 className="text-white">Bem-vindo ao Random Movie</h1>
               </div>
-              <div className="col-md-3 form-group">
-                <label>De:</label>
-                <select onChange={this._yearGTEChange} className="form-control">
-                  <option value=""></option>
-                  {SelectYear().map((item, index) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-6 form-group">
+                    <label>Gênero</label>
+                    <select
+                      onChange={this._genreChange}
+                      className="form-control"
+                      required
+                    >
+                      <option value=""></option>
+                      {genresOptions.map((item, index) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-md-3 form-group">
+                    <label>De:</label>
+                    <select
+                      onChange={this._yearGTEChange}
+                      className="form-control"
+                    >
+                      <option value=""></option>
+                      {SelectYear().map((item, index) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-              <div className="col-md-3 form-group">
-                <label>Até:</label>
-                <select onChange={this._yearLTEChange} className="form-control">
-                  <option value=""></option>
-                  {SelectYear().map((item, index) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
+                  <div className="col-md-3 form-group">
+                    <label>Até:</label>
+                    <select
+                      onChange={this._yearLTEChange}
+                      className="form-control"
+                    >
+                      <option value=""></option>
+                      {SelectYear().map((item, index) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-12">
+                    <label>&nbsp;</label>
+                    <button
+                      className="btn btn-primary btn-block btn-search"
+                      onClick={() => this.getPage()}
+                    >
+                      Procurar
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div className="row">
-              <div className="col-md-12">
-                <label>&nbsp;</label>
-                <button
-                  className="btn btn-primary btn-block"
-                  onClick={() => this.getPage()}
-                >
-                  Procurar
-                </button>
-              </div>
-            </div>
-
             <div
-              className="container-movie mt-5"
-              style={{ display: this.state.show ? "block" : "none" }}
+              className="container-movie py-3"
+              style={{
+                display: this.state.show ? "block" : "none",
+                backgroundImage: `url(${GetImage(
+                  this.state.randomMovie.backdrop_path,
+                  "original"
+                )})`,
+                flex: 1,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover"
+              }}
             >
-              <h2 className="text-center mb-5">Filme Escolhido:</h2>
+              <div className="container bg-white container-white card">
+                <div className="mb-5 pt-4 d-flex justify-content-center">
+                  <h2 className="filme-escolhido-title">
+                    E o filme escolhido foi...
+                    <span> {this.state.randomMovie.title} </span>
+                  </h2>
+                </div>
+                <div className="row pb-4">
+                  <div className="col-md-5 position-relative">
+                    <img
+                      className="img-fluid img-card"
+                      src={GetImage(this.state.randomMovie.poster_path, "w780")}
+                      alt={this.state.randomMovie.title}
+                      title={this.state.randomMovie.title}
+                    />
+                    <p className="vote">
+                      {this.state.randomMovie.vote_average}
+                    </p>
+                  </div>
 
-              <div className="row">
-                <div className="col-md-5">
-                  <img
-                    className="img-fluid"
-                    src={GetImage(this.state.randomMovie.poster_path)}
-                    alt={this.state.randomMovie.title}
-                    title={this.state.randomMovie.title}
-                  />
+                  <div className="col-md-7 info-movie">
+                    <p className="title">
+                      <span>Lançamento:</span>{" "}
+                      {FormatDate(this.state.randomMovie.release_date)}
+                    </p>
+
+                    <p className="language">
+                      <span>Linguagem Original:</span>{" "}
+                      {this.state.randomMovie.original_language}
+                    </p>
+
+                    <p className="overview">
+                      <span>Sinopse:</span> {this.state.randomMovie.overview}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="col-md-7">
-                  <p className="title">
-                    Titulo: {this.state.randomMovie.title}
-                  </p>
-                  <p className="title">
-                    Lançamento:
-                    {FormatDate(this.state.randomMovie.release_date)}
-                  </p>
+                <Trailer
+                  url={this.state.trailer}
+                  showTrailer={this.state.showTrailer}
+                />
 
-                  <p className="language">
-                    Linguagem Original:
-                    {this.state.randomMovie.original_language}
-                  </p>
-
-                  <p className="vote">
-                    Média de Votos: {this.state.randomMovie.vote_average}
-                  </p>
-
-                  <p className="overview">
-                    Sinopse: {this.state.randomMovie.overview}
-                  </p>
-                </div>
+                <Similar
+                  showSimilar={this.state.showSimilar}
+                  similar={this.state.similar}
+                  getSimilarId={this.getSimilarId.bind(this)}
+                />
               </div>
-
-              <Trailer
-                url={this.state.trailer}
-                showTrailer={this.state.showTrailer}
-              />
             </div>
-
-            <Similar
-              showSimilar={this.state.showSimilar}
-              similar={this.state.similar}
-              getSimilarId={this.getSimilarId.bind(this)}
-            />
           </div>
-        </div>
-      </section>
-    );
+        </section>
+      );
+    }
   }
 }
