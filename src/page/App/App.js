@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import Home from "../Home/Home";
 import Chosen from "../Chosen/Chosen";
+import History from "../History/History";
 
 export default class App extends Component {
   render() {
@@ -15,6 +16,7 @@ export default class App extends Component {
             path="/chosen"
             render={props => <Chosen {...props} teste={"teste"} />}
           />
+          <Route exact path="/history" component={History} />
         </div>
       </BrowserRouter>
     );

@@ -36,7 +36,7 @@ export default class Chosen extends Component {
     return (
       <button
         onClick={() => this.showTrailer()}
-        className="btn btn-primary btn-trailer btn-block mt-2"
+        className="btn btn-primary btn-trailer btn-block mt-2 btn-custom"
       >
         <i class="fas fa-play-circle mr-2"></i> Ver Trailer
       </button>
@@ -68,15 +68,6 @@ export default class Chosen extends Component {
   }
 
   render() {
-    // if (!this.props.location.state.chosen) {
-    //   return (
-    //     <Redirect
-    //       to={{
-    //         pathname: "/"
-    //       }}
-    //     />
-    //   );
-    // }
     return (
       <section>
         <div
@@ -103,7 +94,7 @@ export default class Chosen extends Component {
             </div>
             <div className="row">
               <div className="col-md-4">
-                <div className=" position-relative">
+                <div className="position-relative">
                   <img
                     className="img-fluid img-card"
                     src={GetImage(
@@ -140,7 +131,7 @@ export default class Chosen extends Component {
             </div>
 
             <Link to={{ pathname: "/" }}>
-              <button className="btn btn-primary btn-voltar btn-block mt-3">
+              <button className="btn btn-primary btn-voltar btn-block mt-3 btn-custom">
                 <i class="fas fa-search mr-2"></i> Procurar novamente
               </button>
             </Link>

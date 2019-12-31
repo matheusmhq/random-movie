@@ -11,11 +11,13 @@ import {
 import "./styles.css";
 
 import { Server } from "../../server/ServerVariables";
+import { SalvarId } from "../../functions/Storage";
 
 //Import Components
 import Loading from "../../components/Loading/Loading";
 
 let genresOptions = [];
+let btnHistory = [];
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +32,10 @@ export default class Home extends Component {
     };
 
     this.getGender();
+  }
+
+  componentWillMount() {
+    btnHistory = JSON.parse(localStorage.getItem("random-movie-id"));
   }
 
   getGender() {
@@ -164,6 +170,7 @@ export default class Home extends Component {
                   show: "true"
                 });
 
+                SalvarId(responseJson.results[i].id);
                 console.log(responseJson.results[i]);
               }
             }
@@ -184,6 +191,18 @@ export default class Home extends Component {
       setTimeout(() => {
         this.setState({ redirect: true });
       }, 6000);
+    }
+  }
+
+  getBtnHistory() {
+    if (btnHistory) {
+      return (
+        <Link to={{ pathname: "/history" }}>
+          <button className="btn btn-primary btn-custom btn-block btn-search mt-4">
+            Histórico
+          </button>
+        </Link>
+      );
     }
   }
 
@@ -269,11 +288,12 @@ export default class Home extends Component {
                     <div className="col-md-12">
                       <label>&nbsp;</label>
                       <button
-                        className="btn btn-primary btn-block btn-search"
+                        className="btn btn-primary btn-block btn-search btn-custom"
                         onClick={() => this.Verification()}
                       >
                         Procurar
                       </button>
+                      {btnHistory ? this.getBtnHistory() : ""}
                     </div>
                   </div>
                 </div>

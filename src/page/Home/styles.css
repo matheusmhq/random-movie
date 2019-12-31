@@ -96,13 +96,9 @@ label {
 }
 
 .filme-escolhido-title {
-  color: #777;
   font-family: "Baloo Bhai", cursive;
   font-weight: bold;
-}
-
-.filme-escolhido-title {
-  font-size: 30px;
+  font-size: 30px !important;
   text-transform: uppercase;
   position: relative;
   text-align: center;
@@ -187,6 +183,21 @@ label {
   justify-content: center;
 }
 
+.vote-history {
+  position: absolute;
+  right: 0px;
+  bottom: -16px;
+  background: orange;
+  color: white !important;
+  width: 64px;
+  height: 43px;
+  font-weight: bold;
+  border-top-left-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .similar-img {
   cursor: pointer;
   overflow: hidden;
@@ -229,9 +240,7 @@ label {
   max-width: 844px;
 }
 
-.btn-search,
-.btn-voltar,
-.btn-trailer {
+.btn-custom {
   background: linear-gradient(90deg, #7b4397, #dc2430);
   border: none;
   text-transform: uppercase;
@@ -479,4 +488,21 @@ a:hover {
   font-size: 26px;
   font-family: "Source Sans Pro", sans-serif;
   font-weight: bold;
+}
+
+.history {
+  background: black;
+  min-height: 100vh;
+}
+
+.card-history {
+  background-color: #f2f2f2;
+}
+
+.history .title-apagar {
+  font-size: 22px;
+  text-align: center;
+}
+
+.history .btn-apagar {
 }
