@@ -13,11 +13,11 @@ export default class Loading extends Component {
             <div className="circle"></div>
             <div className="circle"></div>
           </div> */}
-          <div id="loader">
+          {/* <div id="loader">
             <div id="top"></div>
             <div id="bottom"></div>
             <div id="line"></div>
-          </div>
+          </div> */}
           <div id="container">
             <div class="black-loading">
               <div className="a"></div>

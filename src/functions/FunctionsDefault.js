@@ -37,6 +37,12 @@ export function GetImage(poster_path, type) {
   }
 }
 
+export function GetBackground(poster_path, type) {
+  if (poster_path != null) {
+    return "http://image.tmdb.org/t/p/" + type + poster_path;
+  }
+}
+
 //Pega a data atual no formato "yyy-mm-dd"
 export function DateNow() {
   let d = new Date(Date.now());

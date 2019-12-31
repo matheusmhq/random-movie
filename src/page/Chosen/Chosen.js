@@ -5,13 +5,13 @@ import { Link, Redirect } from "react-router-dom";
 import {
   GetImage,
   DateNow,
-  FormatDate
+  FormatDate,
+  GetBackground
 } from "../../functions/FunctionsDefault";
 
 import { Server } from "../../server/ServerVariables";
 
 import Trailer from "../../components/Trailer/Trailer";
-import Loading from "../../components/Loading/Loading";
 
 let src = "";
 var height = 0;
@@ -77,85 +77,81 @@ export default class Chosen extends Component {
     //     />
     //   );
     // }
-    if (this.state.loading) {
-      return <Loading />;
-    } else {
-      return (
-        <section>
-          <div
-            className="container-movie"
-            style={{
-              backgroundImage: `url(${GetImage(
-                this.props.location.state.chosen.backdrop_path,
-                "original"
-              )})`,
-              flex: 1,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover"
-            }}
-          >
-            <div className="container-white card p-4">
-              <div className="mb-4 row align-items-center">
-                <h2 className="col-md-4 text-center escolhido-foi mb-4 mb-md-0">
-                  {" "}
-                  E o filme escolhido foi:
-                </h2>
-                <h1 className="filme-escolhido-title col-md-8">
-                  {this.props.location.state.chosen.title}
-                </h1>
-              </div>
-              <div className="row">
-                <div className="col-md-4">
-                  <div className=" position-relative">
-                    <img
-                      className="img-fluid img-card"
-                      src={GetImage(
-                        this.props.location.state.chosen.poster_path,
-                        "w1280"
-                      )}
-                      alt={this.props.location.state.chosen.title}
-                      title={this.props.location.state.chosen.title}
-                    />
-                    <p className="vote">
-                      <i className="far fa-star mr-2"></i>
-                      {this.props.location.state.chosen.vote_average}
-                    </p>
-                  </div>
-                  {this.state.trailerUrl ? this.BtnTrailer() : ""}
-                </div>
-
-                <div className="col-md-7 info-movie mt-4 mt-md-0">
-                  <p className="title">
-                    <span>Lançamento:</span>{" "}
-                    {FormatDate(this.props.location.state.chosen.release_date)}
-                  </p>
-
-                  <p className="language">
-                    <span>Idioma Original:</span>{" "}
-                    {this.props.location.state.chosen.original_language}
-                  </p>
-
-                  <p className="overview">
-                    <span>Sinopse:</span>{" "}
-                    {this.props.location.state.chosen.overview}
-                  </p>
-                </div>
-              </div>
-
-              <Link to={{ pathname: "/" }}>
-                <button className="btn btn-primary btn-voltar btn-block mt-3">
-                  <i class="fas fa-search mr-2"></i> Procurar novamente
-                </button>
-              </Link>
+    return (
+      <section>
+        <div
+          className="container-movie"
+          style={{
+            backgroundImage: `url(${GetBackground(
+              this.props.location.state.chosen.backdrop_path,
+              "original"
+            )})`,
+            flex: 1,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover"
+          }}
+        >
+          <div className="container-white card p-4">
+            <div className="mb-4 row align-items-center">
+              <h2 className="col-md-4 text-center escolhido-foi mb-4 mb-md-0">
+                {" "}
+                E o filme escolhido foi:
+              </h2>
+              <h1 className="filme-escolhido-title col-md-8">
+                {this.props.location.state.chosen.title}
+              </h1>
             </div>
+            <div className="row">
+              <div className="col-md-4">
+                <div className=" position-relative">
+                  <img
+                    className="img-fluid img-card"
+                    src={GetImage(
+                      this.props.location.state.chosen.poster_path,
+                      "w1280"
+                    )}
+                    alt={this.props.location.state.chosen.title}
+                    title={this.props.location.state.chosen.title}
+                  />
+                  <p className="vote">
+                    <i className="far fa-star mr-2"></i>
+                    {this.props.location.state.chosen.vote_average}
+                  </p>
+                </div>
+                {this.state.trailerUrl ? this.BtnTrailer() : ""}
+              </div>
+
+              <div className="col-md-7 info-movie mt-4 mt-md-0">
+                <p className="title">
+                  <span>Lançamento:</span>{" "}
+                  {FormatDate(this.props.location.state.chosen.release_date)}
+                </p>
+
+                <p className="language">
+                  <span>Idioma Original:</span>{" "}
+                  {this.props.location.state.chosen.original_language}
+                </p>
+
+                <p className="overview">
+                  <span>Sinopse:</span>{" "}
+                  {this.props.location.state.chosen.overview}
+                </p>
+              </div>
+            </div>
+
+            <Link to={{ pathname: "/" }}>
+              <button className="btn btn-primary btn-voltar btn-block mt-3">
+                <i class="fas fa-search mr-2"></i> Procurar novamente
+              </button>
+            </Link>
           </div>
-          <Trailer
-            url={this.state.trailerUrl}
-            showTrailer={this.state.showTrailer}
-            hideTrailer={this.HideTrailer.bind(this)}
-          />
-        </section>
-      );
-    }
+        </div>
+        <Trailer
+          url={this.state.trailerUrl}
+          showTrailer={this.state.showTrailer}
+          hideTrailer={this.HideTrailer.bind(this)}
+        />
+      </section>
+    );
   }
 }
