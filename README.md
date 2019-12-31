@@ -1,9 +1,9 @@
 # Bem vindo ao Random Movie
 
-Um aplicação web construido com React-JS consumindo a api oficial do TMDB
+Uma aplicação web construido com React-JS consumindo a api oficial do TMDB
 
-# Funcões
+# O que faz?
 
-A aplicação escolhe um filme aleatorio baseado nos filtros escolhidos (Gênero, Ano Mínimo, Ano Maximo)
+A aplicação escolhe um filme aleatorio baseado nos filtros escolhidos (Gênero, Ano Mínimo, Ano Máximo)
 
-É possivel ver todos uma listagem de todos os filmes escolhidos.
+É possivel ver uma listagem de todos os filmes sorteados.
