@@ -11,7 +11,6 @@ export function SalvarId(id) {
 }
 
 export function ClearStorage() {
-  console.log("CLEAR FUNCITON");
   var clear = true;
   try {
     localStorage.clear();

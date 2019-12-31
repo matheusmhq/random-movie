@@ -34,7 +34,6 @@ export default class History extends Component {
   }
 
   getMovie(id) {
-    console.log("ID UNICO " + id);
     fetch(Server.url + "movie/" + id + Server.key + Server.pt, {
       method: "GET",
       headers: {
@@ -44,7 +43,6 @@ export default class History extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log(responseJson);
         this.setState(prevState => ({
           listMovie: [...prevState.listMovie, responseJson]
         }));
@@ -107,7 +105,6 @@ export default class History extends Component {
   }
 
   render() {
-    console.log("TRAILERRR" + this.state.trailerUrl);
     if (this.state.redirect) {
       return <Redirect to={{ pathname: "/" }} />;
     }

@@ -111,10 +111,7 @@ export default class Home extends Component {
       )
         .then(response => response.json())
         .then(responseJson => {
-          console.log(responseJson);
           if (responseJson.results.length > 0) {
-            //console.log(responseJson.total_pages);
-
             this.randomMovie(responseJson.total_pages);
           }
         })
@@ -166,7 +163,6 @@ export default class Home extends Component {
       )
         .then(response => response.json())
         .then(responseJson => {
-          console.log(responseJson);
           if (responseJson.results.length > 0) {
             for (var i = 0; i < 20; i++) {
               if (index == i) {
@@ -176,7 +172,6 @@ export default class Home extends Component {
                 });
 
                 SalvarId(responseJson.results[i].id);
-                console.log(responseJson.results[i]);
               }
             }
           }
