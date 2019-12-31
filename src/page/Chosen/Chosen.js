@@ -94,9 +94,9 @@ export default class Chosen extends Component {
               backgroundSize: "cover"
             }}
           >
-            <div className="container-white card p-3">
-              <div className="mb-5 row align-items-center">
-                <h2 className="col-md-4 text-center escolhido-foi mb-5 mb-md-0">
+            <div className="container-white card p-4">
+              <div className="mb-4 row align-items-center">
+                <h2 className="col-md-4 text-center escolhido-foi mb-4 mb-md-0">
                   {" "}
                   E o filme escolhido foi:
                 </h2>
@@ -131,7 +131,7 @@ export default class Chosen extends Component {
                   </p>
 
                   <p className="language">
-                    <span>Linguagem Original:</span>{" "}
+                    <span>Idioma Original:</span>{" "}
                     {this.props.location.state.chosen.original_language}
                   </p>
 

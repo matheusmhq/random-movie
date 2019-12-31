@@ -4,7 +4,11 @@
 
 .home {
   min-height: 100vh;
-  background: black;
+  /* background: url(../../assets/Image/pop-corn.png) no-repeat center; */
+}
+
+.black {
+  background: rgba(0, 0, 0, 1);
 }
 
 .container-movie {
@@ -26,13 +30,8 @@ label {
   color: black;
 }
 
-.black {
-  /* background: rgba(0, 0, 0, 0.9); */
+.container-search {
   min-height: 100vh;
-}
-
-.search {
-  background: black;
 }
 
 .search h1 {
@@ -98,7 +97,7 @@ label {
 
 .filme-escolhido-title {
   color: #777;
-  font-family: "Anton", sans-serif;
+  font-family: "Baloo Bhai", cursive;
   font-weight: bold;
 }
 
@@ -221,11 +220,11 @@ label {
 .similar-item img,
 .img-card,
 .container-white {
-  box-shadow: 1px 3px 20px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 3px 20px 1px rgba(0, 0, 0, 0.1);
 }
 
 .container-white {
-  background: #ffffffeb;
+  background: #f2f2f2;
   width: 100%;
   max-width: 844px;
 }
@@ -261,6 +260,97 @@ a:hover {
 }
 
 /* LOAGIND */
+
+#container {
+  border: 70px solid #d6cdbe;
+  border-top: none;
+  border-bottom: none;
+  padding: 30px;
+  border-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/108463/gradient%202.png)
+    205 repeat;
+  animation: movie 6s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.black-loading {
+  background: black;
+}
+
+#container div {
+  opacity: 0.4;
+}
+
+#container .a {
+  height: 80vh;
+  width: 80vw;
+  background-color: white;
+  background-image: url("../../assets/Image/loading/hobbit.jpg");
+  background-size: cover;
+  border-radius: 5%;
+  margin: 3em 0;
+}
+
+#container .b {
+  height: 80vh;
+  width: 80vw;
+  background-color: white;
+  background-image: url("../../assets/Image/loading/fast.jpg");
+  background-size: cover;
+  border-radius: 5%;
+  margin: 3em 0;
+}
+
+#container .c {
+  height: 80vh;
+  width: 80vw;
+  background-color: white;
+  background-image: url("../../assets/Image/loading/avengers.jpeg");
+  background-size: cover;
+  border-radius: 5%;
+  margin: 3em 0;
+}
+
+#container .d {
+  height: 80vh;
+  width: 80vw;
+  background-color: white;
+  background-image: url("../../assets/Image/loading/inter.jpg");
+  background-size: cover;
+  border-radius: 5%;
+  margin: 3em 0;
+}
+
+@keyframes movie {
+  0% {
+    transform: translatey(-1800px);
+  }
+  10% {
+    transform: translatey(-1200);
+  }
+  20% {
+    transform: translatey(-1000px);
+  }
+  40% {
+    transform: translatey(-500px);
+  }
+  60% {
+    transform: translatey(200px);
+  }
+  80% {
+    transform: translatey(400px);
+  }
+  100% {
+    transform: translatey(1200px);
+  }
+}
+
+.loading h1 {
+  position: absolute;
+  color: white;
+  left: 30%;
+  top: calc(50% + 20px);
+}
+
 .loading {
   background: black;
   height: 100vh;
@@ -286,98 +376,75 @@ a:hover {
   width: 110px;
   height: 14px;
 }
-
-.circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 14px;
-  border: 2px solid white;
-  margin: 10px;
-  animation: rotate 2s infinite linear;
-  animation-fill-mode: both;
-  display: inline-block;
+#loader {
+  animation: loader 5s cubic-bezier(0.8, 0, 0.2, 1) infinite;
+  height: 40px;
+  width: 41px;
+  position: absolute;
+  top: calc(50% + 100px);
+  left: calc(50% - 20px);
 }
-
-.circle:nth-of-type(2) {
-  animation: rotate2 2s infinite linear;
-  animation-fill-mode: both;
+@keyframes loader {
+  90% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
 }
-
-.circle:nth-of-type(3) {
-  animation: rotate3 2s infinite linear;
-  animation-fill-mode: both;
+#top {
+  animation: top 5s linear infinite;
+  border-top: 20px solid #fff;
+  border-right: 20px solid transparent;
+  border-left: 20px solid transparent;
+  height: 0px;
+  width: 1px;
+  transform-origin: 50% 100%;
 }
-
-@keyframes rotate {
-  0% {
+@keyframes top {
+  90% {
     transform: scale(0);
-    opacity: 0;
   }
-  25% {
-    transform: scale(1);
-    opacity: 1;
+  100% {
+    transform: scale(0);
   }
-  75% {
-    transform: scale(1);
-    opacity: 1;
+}
+#bottom {
+  animation: bottom 5s linear infinite;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #fff;
+  border-left: 20px solid transparent;
+  height: 0px;
+  width: 1px;
+  transform: scale(0);
+  transform-origin: 50% 100%;
+}
+@keyframes bottom {
+  10% {
+    transform: scale(0);
   }
-  85% {
+  90% {
     transform: scale(1);
-    opacity: 1;
   }
   100% {
     transform: scale(1);
-    opacity: 0;
   }
 }
-
-@keyframes rotate2 {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  25% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  75% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  85% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
+#line {
+  animation: line 5s linear infinite;
+  border-left: 1px dotted #fff;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
-
-@keyframes rotate3 {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  75% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  85% {
-    transform: scale(1);
-    opacity: 1;
+@keyframes line {
+  10% {
+    height: 20px;
   }
   100% {
-    transform: scale(1);
-    opacity: 0;
+    height: 20px;
   }
 }
 
@@ -397,5 +464,7 @@ a:hover {
 }
 
 .escolhido-foi {
-  font-size: 30px;
+  font-size: 26px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: bold;
 }
