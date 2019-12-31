@@ -90,20 +90,9 @@ label {
   }
 }
 
-@keyframes color {
-  0% {
-    background: -webkit-linear-gradient(
-      #000000,
-      rgb(216, 0, 0),
-      rgb(2, 207, 105)
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  100% {
-    background: -webkit-linear-gradient(#002750, rgb(126, 0, 0), black);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+@keyframes textShine {
+  to {
+    background-position: 200%;
   }
 }
 
@@ -113,16 +102,30 @@ label {
   font-weight: bold;
 }
 
-.filme-escolhido-title span {
+.filme-escolhido-title {
   font-size: 30px;
   text-transform: uppercase;
   position: relative;
-  min-width: 420px;
   text-align: center;
-  background: -webkit-linear-gradient(#002750, rgb(126, 0, 0), black);
+  background: linear-gradient(
+    to right,
+    red 10%,
+    #bada55 20%,
+    red 30%,
+    #bada55 40%,
+    red 50%,
+    #bada44 60%,
+    red 70%,
+    #bada44 80%,
+    red 90%,
+    #bada44 100%
+  );
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: color 1s infinite ease;
+  text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: textShine 7s ease-in-out infinite;
 }
 
 /* .filme-escolhido-title::before {
@@ -158,7 +161,7 @@ label {
 .vote {
   position: absolute;
   bottom: -16px;
-  right: 15px;
+  right: 0px;
   background: orange;
   color: white !important;
   width: 64px;
@@ -218,21 +221,29 @@ label {
 .similar-item img,
 .img-card,
 .container-white {
-  box-shadow: 1px 3px 20px 1px #474747;
+  box-shadow: 1px 3px 20px 1px rgba(0, 0, 0, 0.4);
 }
 
 .container-white {
   background: #ffffffeb;
+  width: 100%;
+  max-width: 844px;
 }
 
-.btn-search {
+.btn-search,
+.btn-voltar,
+.btn-trailer {
   background: linear-gradient(90deg, #7b4397, #dc2430);
   border: none;
   text-transform: uppercase;
   font-size: 16px;
 }
 
-.btn-search:focus {
+a:hover {
+  text-decoration: none;
+}
+
+.btn:focus {
   border: none;
   box-shadow: none;
 }
@@ -372,7 +383,7 @@ label {
 
 .trailer {
   position: absolute;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.7);
   width: 100%;
   top: 0px;
   height: 100vh;
@@ -385,8 +396,6 @@ label {
   max-width: 1140px;
 }
 
-.btn-trailer {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
+.escolhido-foi {
+  font-size: 30px;
 }

@@ -259,9 +259,6 @@ export default class Home extends Component {
                 console.log(responseJson.results[i]);
               }
             }
-
-            this.getTrailer(this.state.randomMovie.id);
-            this.getSimilar(this.state.randomMovie.id);
           }
         })
         .catch(error => {

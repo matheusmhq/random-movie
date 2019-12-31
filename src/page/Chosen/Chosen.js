@@ -14,6 +14,7 @@ import Trailer from "../../components/Trailer/Trailer";
 import Loading from "../../components/Loading/Loading";
 
 let src = "";
+var height = 0;
 export default class Chosen extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +24,23 @@ export default class Chosen extends Component {
       trailerUrl: ""
     };
 
-    this.getTrailer(299534);
+    this.getTrailer(this.props.location.state.chosen.id);
+  }
+
+  showTrailer() {
+    this.setState({ showTrailer: true });
+    window.scrollTo(0, 0);
+  }
+
+  BtnTrailer() {
+    return (
+      <button
+        onClick={() => this.showTrailer()}
+        className="btn btn-primary btn-trailer btn-block mt-2"
+      >
+        <i class="fas fa-play-circle mr-2"></i> Ver Trailer
+      </button>
+    );
   }
 
   getTrailer(id) {
@@ -44,6 +61,10 @@ export default class Chosen extends Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  HideTrailer() {
+    this.setState({ showTrailer: false });
   }
 
   render() {
@@ -73,28 +94,34 @@ export default class Chosen extends Component {
               backgroundSize: "cover"
             }}
           >
-            <div className="container container-white card">
-              <div className="mb-5 pt-4 d-flex justify-content-center">
-                <h2 className="filme-escolhido-title">
+            <div className="container-white card p-3">
+              <div className="mb-5 row align-items-center">
+                <h2 className="col-md-4 text-center escolhido-foi mb-5 mb-md-0">
+                  {" "}
                   E o filme escolhido foi:
-                  <span> {this.props.location.state.chosen.title} </span>
                 </h2>
+                <h1 className="filme-escolhido-title col-md-8">
+                  {this.props.location.state.chosen.title}
+                </h1>
               </div>
-              <div className="row pb-4">
-                <div className="col-md-5 position-relative">
-                  <img
-                    className="img-fluid img-card"
-                    src={GetImage(
-                      this.props.location.state.chosen.poster_path,
-                      "w780"
-                    )}
-                    alt={this.props.location.state.chosen.title}
-                    title={this.props.location.state.chosen.title}
-                  />
-                  <p className="vote">
-                    <i className="far fa-star mr-2"></i>
-                    {this.props.location.state.chosen.vote_average}
-                  </p>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className=" position-relative">
+                    <img
+                      className="img-fluid img-card"
+                      src={GetImage(
+                        this.props.location.state.chosen.poster_path,
+                        "w1280"
+                      )}
+                      alt={this.props.location.state.chosen.title}
+                      title={this.props.location.state.chosen.title}
+                    />
+                    <p className="vote">
+                      <i className="far fa-star mr-2"></i>
+                      {this.props.location.state.chosen.vote_average}
+                    </p>
+                  </div>
+                  {this.state.trailerUrl ? this.BtnTrailer() : ""}
                 </div>
 
                 <div className="col-md-7 info-movie mt-4 mt-md-0">
@@ -109,22 +136,23 @@ export default class Chosen extends Component {
                   </p>
 
                   <p className="overview">
-                    <span>Sinopse:</span> {this.props.location.state.overview}
+                    <span>Sinopse:</span>{" "}
+                    {this.props.location.state.chosen.overview}
                   </p>
                 </div>
               </div>
 
-              <button
-                onClick={() => this.setState({ showTrailer: true })}
-                className="btn btn-primary btn-trailer"
-              >
-                <i class="fas fa-play-circle mr-2"></i> Ver Trailer
-              </button>
+              <Link to={{ pathname: "/" }}>
+                <button className="btn btn-primary btn-voltar btn-block mt-3">
+                  <i class="fas fa-search mr-2"></i> Procurar novamente
+                </button>
+              </Link>
             </div>
           </div>
           <Trailer
             url={this.state.trailerUrl}
             showTrailer={this.state.showTrailer}
+            hideTrailer={this.HideTrailer.bind(this)}
           />
         </section>
       );

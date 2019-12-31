@@ -6,7 +6,7 @@ export default class Trailer extends Component {
   render() {
     if (this.props.showTrailer) {
       return (
-        <section className="trailer">
+        <section className="trailer" onClick={() => this.props.hideTrailer()}>
           <div className="trailer-container col-12 my-4 mb-2">
             <iframe
               title="trailer"
