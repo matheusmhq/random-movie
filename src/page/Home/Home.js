@@ -63,7 +63,12 @@ export default class Home extends Component {
     this.setState({ yearGTE: event.target.value });
   };
   _yearLTEChange = event => {
-    this.setState({ yearLTE: event.target.value });
+    if (this.state.yearGTE >= event.target.value) {
+      alert("O primeiro ano deve ser menor que o segundo");
+      event.target.value = "";
+    } else {
+      this.setState({ yearLTE: event.target.value });
+    }
   };
 
   getPage() {
@@ -273,6 +278,7 @@ export default class Home extends Component {
                       <select
                         onChange={this._yearLTEChange}
                         className="form-control"
+                        defaultValue={this.state.yearLTE}
                       >
                         <option value=""></option>
                         {SelectYear().map((item, index) => (
