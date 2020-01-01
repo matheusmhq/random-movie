@@ -191,6 +191,7 @@ export default class Home extends Component {
           this.setState({
             randomMovie: responseJson
           });
+          console.log(this.state.randomMovie);
           SaveMovie(responseJson.id);
         }
       })
@@ -230,8 +231,8 @@ export default class Home extends Component {
           to={{
             pathname: "/chosen",
             state: {
-              genre: this.state.genre,
               chosen: this.state.randomMovie
+              //chosen: []
             }
           }}
         />
@@ -243,7 +244,8 @@ export default class Home extends Component {
       return (
         <section className="home">
           <div className="black">
-            <div className="container-search d-flex align-items-center justify-content-center">
+            <div className="container-search py-2 d-flex align-items-center justify-content-between flex-column">
+              <p>&nbsp;</p>
               <div
                 className="search container"
                 ref={divElement => {
@@ -314,6 +316,18 @@ export default class Home extends Component {
                       {btnHistory ? this.getBtnHistory() : ""}
                     </div>
                   </div>
+                </div>
+              </div>
+              <div className="dev d-flex justify-content-center mt-3">
+                <div className="d-flex">
+                  <p className="text-white mr-1 m-0"> Desenvolvido por </p>
+                  <a
+                    target="_blank"
+                    href="https://matheusmhq.com.br/"
+                    className="text-white m-0 font-weight-bold"
+                  >
+                    Matheus Henrique
+                  </a>
                 </div>
               </div>
             </div>

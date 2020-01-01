@@ -119,13 +119,13 @@ export default class History extends Component {
       return <Redirect to={{ pathname: "/" }} />;
     }
     return (
-      <section className="history py-4">
+      <section className="history py-2">
         <div className="container">
           <div className="mb-3 row justify-content-center align-align-center">
-            <p className="text-white title-apagar col-12">
+            <p className="title-apagar col-12 mt-4">
               Acompanhe aqui o histórico de filmes escolhidos para você!
             </p>
-            <div className="col-12 row justify-content-between mt-3">
+            <div className="col-12 row justify-content-between">
               <div className="col-md-3 mb-3 mb-md-0 p-0">
                 <button
                   onClick={() => this.DeleteHistory()}
@@ -189,6 +189,18 @@ export default class History extends Component {
           showTrailer={this.state.showTrailer}
           hideTrailer={this.HideTrailer.bind(this)}
         />
+        <div className="dev d-flex justify-content-center mt-3">
+          <div className="d-flex">
+            <p className="text-white mr-1 m-0"> Desenvolvido por </p>
+            <a
+              target="_blank"
+              href="https://matheusmhq.com.br/"
+              className="text-white m-0 font-weight-bold"
+            >
+              Matheus Henrique
+            </a>
+          </div>
+        </div>
       </section>
     );
   }

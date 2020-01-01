@@ -493,6 +493,9 @@ a:hover {
 .history {
   background: black;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-history {
@@ -500,8 +503,19 @@ a:hover {
 }
 
 .history .title-apagar {
-  font-size: 22px;
+  font-size: 26px;
   text-align: center;
+  color: #777;
+  text-transform: uppercase;
+}
+
+.title-apagar::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-top: 16px;
 }
 
 .history .btn-apagar {
@@ -510,3 +524,19 @@ a:hover {
 .btn-imdb i {
   font-size: 26px;
 } */
+
+.dev {
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dev::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
+}

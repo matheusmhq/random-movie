@@ -20,10 +20,20 @@ export default class Chosen extends Component {
 
     this.state = {
       showTrailer: false,
-      trailerUrl: ""
+      trailerUrl: "",
+      error: false
     };
+  }
 
-    this.getTrailer(this.props.location.state.chosen.id);
+  componentDidMount() {
+    if (this.props.location.state.chosen != null) {
+      this.getTrailer(this.props.location.state.chosen.id);
+    } else {
+      alert(
+        "Ops... Algo deu errado, você será redirecionado a página de pesquisa novamente."
+      );
+      this.setState({ redirect: true });
+    }
   }
 
   showTrailer() {
@@ -77,6 +87,16 @@ export default class Chosen extends Component {
   }
 
   render() {
+    if (this.state.error) {
+      return (
+        <div>
+          <p>Algo deu errado</p>
+        </div>
+      );
+    }
+    if (this.state.redirect) {
+      return <Redirect to={{ pathname: "/" }} />;
+    }
     return (
       <section>
         <div
