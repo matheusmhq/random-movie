@@ -12,10 +12,7 @@ export default class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={Home} />
-          <Route
-            path="/chosen"
-            render={props => <Chosen {...props} teste={"teste"} />}
-          />
+          <Route path="/chosen" render={props => <Chosen {...props} />} />
           <Route exact path="/history" component={History} />
         </div>
       </BrowserRouter>
