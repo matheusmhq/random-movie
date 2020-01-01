@@ -191,7 +191,6 @@ export default class Home extends Component {
           this.setState({
             randomMovie: responseJson
           });
-          console.log(this.state.randomMovie);
           SaveMovie(responseJson.id);
         }
       })
