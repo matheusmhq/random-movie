@@ -1,6 +1,6 @@
 # Bem vindo ao Random Movie
 
-Uma aplicação web construido com React-JS consumindo a api oficial do TMDB
+Um Web app construído com React-JS consumindo API The Movie Database (Tmdb)
 
 # O que faz?
 
