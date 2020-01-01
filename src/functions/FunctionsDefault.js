@@ -68,6 +68,9 @@ export function RunTime(mins) {
     if (h == "00h") {
       h = "";
     }
+    if (m == "00min") {
+      m = "";
+    }
 
     return `${h} ${m}`;
   }

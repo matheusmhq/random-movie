@@ -157,7 +157,7 @@ export default class Chosen extends Component {
                 </p>
 
                 <p className="runtime">
-                  <span>Duração</span>{" "}
+                  <span>Duração:</span>{" "}
                   {RunTime(this.props.location.state.chosen.runtime)}
                 </p>
 
