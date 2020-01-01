@@ -56,3 +56,19 @@ export function DateNow() {
 
   return [year, month, day].join("-");
 }
+
+//Converte minutos para horas:minutos
+export function RunTime(mins) {
+  if (mins != 0) {
+    let h = Math.floor(mins / 60);
+    let m = mins % 60;
+    h = h < 10 ? "0" + h + "h" : h + "h";
+    m = m < 10 ? "0" + m + "min" : m + "min";
+
+    if (h == "00h") {
+      h = "";
+    }
+
+    return `${h} ${m}`;
+  }
+}

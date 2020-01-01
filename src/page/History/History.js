@@ -2,7 +2,11 @@ import React, { Component } from "react";
 
 import { Redirect } from "react-router-dom";
 
-import { GetImage, FormatDate } from "../../functions/FunctionsDefault";
+import {
+  GetImage,
+  FormatDate,
+  RunTime
+} from "../../functions/FunctionsDefault";
 import { Server } from "../../server/ServerVariables";
 
 import { ClearStorage } from "../../functions/Storage";
@@ -174,6 +178,10 @@ export default class History extends Component {
 
                   <p className="language">
                     <span>Idioma Original:</span> {item.original_language}
+                  </p>
+
+                  <p className="runtime">
+                    <span>Duração</span> {RunTime(item.runtime)}
                   </p>
 
                   <p className="overview">

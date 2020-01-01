@@ -6,7 +6,8 @@ import {
   GetImage,
   DateNow,
   FormatDate,
-  GetBackground
+  GetBackground,
+  RunTime
 } from "../../functions/FunctionsDefault";
 
 import { Server } from "../../server/ServerVariables";
@@ -26,13 +27,13 @@ export default class Chosen extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.state.chosen != null) {
-      this.getTrailer(this.props.location.state.chosen.id);
-    } else {
+    if (this.props.location.state.chosen.id == undefined) {
       alert(
-        "Ops... Algo deu errado, você será redirecionado a página de pesquisa novamente."
+        "Ops... Algo deu errado, você será redirecionado para a página de pesquisa novamente."
       );
       this.setState({ redirect: true });
+    } else {
+      this.getTrailer(this.props.location.state.chosen.id);
     }
   }
 
@@ -153,6 +154,11 @@ export default class Chosen extends Component {
                 <p className="language">
                   <span>Idioma Original:</span>{" "}
                   {this.props.location.state.chosen.original_language}
+                </p>
+
+                <p className="runtime">
+                  <span>Duração</span>{" "}
+                  {RunTime(this.props.location.state.chosen.runtime)}
                 </p>
 
                 <p className="overview">

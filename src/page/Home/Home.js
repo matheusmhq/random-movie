@@ -231,7 +231,6 @@ export default class Home extends Component {
             pathname: "/chosen",
             state: {
               chosen: this.state.randomMovie
-              //chosen: []
             }
           }}
         />
