@@ -14,7 +14,6 @@ import { Server } from "../../server/ServerVariables";
 import Trailer from "../../components/Trailer/Trailer";
 
 let src = "";
-var height = 0;
 export default class Chosen extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +37,7 @@ export default class Chosen extends Component {
         onClick={() => this.showTrailer()}
         className="btn btn-primary btn-trailer btn-block mt-2 btn-custom"
       >
-        <i class="fas fa-play-circle mr-2"></i> Ver Trailer
+        <i className="fas fa-play-circle mr-2"></i> Ver Trailer
       </button>
     );
   }
@@ -65,6 +64,16 @@ export default class Chosen extends Component {
 
   HideTrailer() {
     this.setState({ showTrailer: false });
+  }
+
+  btnImdb(id) {
+    return (
+      <a target="_blank" href={"https://www.imdb.com/title/" + id}>
+        <button className="btn btn-primary btn-imdb btn-block mt-2 btn-custom">
+          IMDB
+        </button>
+      </a>
+    );
   }
 
   render() {
@@ -110,6 +119,9 @@ export default class Chosen extends Component {
                   </p>
                 </div>
                 {this.state.trailerUrl ? this.BtnTrailer() : ""}
+                {this.props.location.state.chosen.imdb_id
+                  ? this.btnImdb(this.props.location.state.chosen.imdb_id)
+                  : ""}
               </div>
 
               <div className="col-md-7 info-movie mt-4 mt-md-0">
@@ -132,7 +144,7 @@ export default class Chosen extends Component {
 
             <Link to={{ pathname: "/" }}>
               <button className="btn btn-primary btn-voltar btn-block mt-3 btn-custom">
-                <i class="fas fa-search mr-2"></i> Procurar novamente
+                <i className="fas fa-search mr-2"></i> Procurar novamente
               </button>
             </Link>
           </div>

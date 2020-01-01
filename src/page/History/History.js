@@ -10,7 +10,7 @@ import { ClearStorage } from "../../functions/Storage";
 import Trailer from "../../components/Trailer/Trailer";
 
 let src = "";
-var ids = "";
+var object = [];
 var i = 0;
 export default class History extends Component {
   constructor(props) {
@@ -25,11 +25,11 @@ export default class History extends Component {
   }
 
   componentWillMount() {
-    ids = JSON.parse(localStorage.getItem("random-movie-id"));
-
-    for (var i = 0; i < ids.length; i++) {
-      this.getMovie(ids[i]);
-      this.getTrailer(ids[i]);
+    object = JSON.parse(localStorage.getItem("random-movie-id"));
+    console.log(object);
+    for (var i = 0; i < object.length; i++) {
+      this.getMovie(object[i].id);
+      this.getTrailer(object[i].id);
     }
   }
 
@@ -43,6 +43,8 @@ export default class History extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
+        console.log("LIST MOVIE");
+        console.log(this.state.listMovie);
         this.setState(prevState => ({
           listMovie: [...prevState.listMovie, responseJson]
         }));
@@ -104,6 +106,16 @@ export default class History extends Component {
     }
   }
 
+  btnImdb(id) {
+    return (
+      <a target="_blank" href={"https://www.imdb.com/title/" + id}>
+        <button className="btn btn-primary btn-imdb btn-block mt-2 btn-custom">
+          IMDB
+        </button>
+      </a>
+    );
+  }
+
   render() {
     if (this.state.redirect) {
       return <Redirect to={{ pathname: "/" }} />;
@@ -116,7 +128,7 @@ export default class History extends Component {
               Acompanhe aqui o histórico de filmes escolhidos para você!
             </p>
             <div className="col-12 row justify-content-between mt-3">
-              <div class="col-md-3 mb-3 mb-md-0 p-0">
+              <div className="col-md-3 mb-3 mb-md-0 p-0">
                 <button
                   onClick={() => this.DeleteHistory()}
                   className="btn btn-primary btn-custom btn-block"
@@ -124,7 +136,7 @@ export default class History extends Component {
                   Apagar Histórico
                 </button>
               </div>
-              <div class="col-md-3 p-0">
+              <div className="col-md-3 p-0">
                 <button
                   className="btn btn-primary btn-custom btn-block"
                   onClick={() => this.setState({ redirect: true })}
@@ -149,8 +161,9 @@ export default class History extends Component {
                       <i className="far fa-star mr-2"></i>
                       {item.vote_average}
                     </p>
-                    {/* {this.state.trailerUrl ? this.BtnTrailer() : ""} */}
                   </div>
+                  {/* {this.state.trailerUrl ? this.BtnTrailer() : ""} */}
+                  {item.imdb_id ? this.BtnImdb(item.imdb_id) : ""}
                 </div>
                 <div className="col-md-8 info-movie">
                   <p className="filme-escolhido-title mt-4 mt-md-0">

@@ -1,17 +1,19 @@
-export function SalvarId(id) {
-  var array = [];
+import { DateNow } from "../functions/FunctionsDefault";
+
+export function SaveMovie(val) {
+  let array = [];
 
   if (!localStorage.getItem("random-movie-id")) {
-    array.push(id);
+    array.unshift({ id: val, date: new Date(Date.now()) });
   } else {
     array = JSON.parse(localStorage.getItem("random-movie-id"));
-    array.push(id);
+    array.unshift({ id: val, date: new Date(Date.now()) });
   }
   localStorage.setItem("random-movie-id", JSON.stringify(array));
 }
 
 export function ClearStorage() {
-  var clear = true;
+  let clear = true;
   try {
     localStorage.clear();
   } catch {

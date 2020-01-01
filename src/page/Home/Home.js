@@ -11,7 +11,7 @@ import {
 import "./styles.css";
 
 import { Server } from "../../server/ServerVariables";
-import { SalvarId } from "../../functions/Storage";
+import { SaveMovie } from "../../functions/Storage";
 
 //Import Components
 import Loading from "../../components/Loading/Loading";
@@ -166,12 +166,14 @@ export default class Home extends Component {
           if (responseJson.results.length > 0) {
             for (var i = 0; i < 20; i++) {
               if (index == i) {
-                this.setState({
-                  randomMovie: responseJson.results[i],
-                  show: "true"
-                });
+                // console.log(responseJson.results[i]);
+                // this.setState({
+                //   randomMovie: responseJson.results[i]
+                // });
 
-                SalvarId(responseJson.results[i].id);
+                // SaveMovie(responseJson.results[i].id);
+                console.log(responseJson.results[i].id);
+                this.getMovie(responseJson.results[i].id);
               }
             }
           }
@@ -180,6 +182,30 @@ export default class Home extends Component {
           console.error(error);
         });
     }
+  }
+
+  getMovie(id) {
+    console.log("IDDDD " + id);
+    fetch(Server.url + "movie/" + id + Server.key + Server.pt, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson != null) {
+          console.log(responseJson);
+          this.setState({
+            randomMovie: responseJson
+          });
+          SaveMovie(responseJson.id);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   Verification() {
