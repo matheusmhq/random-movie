@@ -26,10 +26,10 @@ export default class History extends Component {
 
   componentWillMount() {
     object = JSON.parse(localStorage.getItem("random-movie-id"));
-    console.log(object);
+
     for (var i = 0; i < object.length; i++) {
       this.getMovie(object[i].id);
-      this.getTrailer(object[i].id);
+      this.getTrailer(320288);
     }
   }
 
@@ -43,8 +43,6 @@ export default class History extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log("LIST MOVIE");
-        console.log(this.state.listMovie);
         this.setState(prevState => ({
           listMovie: [...prevState.listMovie, responseJson]
         }));
@@ -59,15 +57,15 @@ export default class History extends Component {
   }
 
   BtnTrailer() {
+    window.scrollTo(0, 0);
     return (
       <button
-        onClick={() => this.showTrailer(i)}
+        onClick={() => this.showTrailer()}
         className="btn btn-primary btn-trailer btn-block mt-2 btn-custom"
       >
         <i class="fas fa-play-circle mr-2"></i> Ver Trailer
       </button>
     );
-    i++;
   }
 
   HideTrailer() {
@@ -100,7 +98,7 @@ export default class History extends Component {
   DeleteHistory() {
     var clear = ClearStorage();
 
-    if (clear == true) {
+    if (clear) {
       alert("Histórico apagado com sucesso!");
       this.setState({ redirect: true });
     }
@@ -163,7 +161,7 @@ export default class History extends Component {
                     </p>
                   </div>
                   {/* {this.state.trailerUrl ? this.BtnTrailer() : ""} */}
-                  {item.imdb_id ? this.BtnImdb(item.imdb_id) : ""}
+                  {item.imdb_id ? this.btnImdb(item.imdb_id) : ""}
                 </div>
                 <div className="col-md-8 info-movie">
                   <p className="filme-escolhido-title mt-4 mt-md-0">

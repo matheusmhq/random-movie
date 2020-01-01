@@ -166,13 +166,6 @@ export default class Home extends Component {
           if (responseJson.results.length > 0) {
             for (var i = 0; i < 20; i++) {
               if (index == i) {
-                // console.log(responseJson.results[i]);
-                // this.setState({
-                //   randomMovie: responseJson.results[i]
-                // });
-
-                // SaveMovie(responseJson.results[i].id);
-                console.log(responseJson.results[i].id);
                 this.getMovie(responseJson.results[i].id);
               }
             }
@@ -185,7 +178,6 @@ export default class Home extends Component {
   }
 
   getMovie(id) {
-    console.log("IDDDD " + id);
     fetch(Server.url + "movie/" + id + Server.key + Server.pt, {
       method: "GET",
       headers: {
@@ -196,7 +188,6 @@ export default class Home extends Component {
       .then(response => response.json())
       .then(responseJson => {
         if (responseJson != null) {
-          console.log(responseJson);
           this.setState({
             randomMovie: responseJson
           });

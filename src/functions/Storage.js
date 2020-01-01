@@ -1,5 +1,3 @@
-import { DateNow } from "../functions/FunctionsDefault";
-
 export function SaveMovie(val) {
   let array = [];
 
