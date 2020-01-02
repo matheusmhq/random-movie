@@ -181,7 +181,7 @@ export default class History extends Component {
                   </p>
 
                   <p className="runtime">
-                    <span>Duração</span> {RunTime(item.runtime)}
+                    <span>Duração:</span> {RunTime(item.runtime)}
                   </p>
 
                   <p className="overview">
